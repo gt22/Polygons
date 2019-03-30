@@ -71,7 +71,7 @@ class PolyDrawer(val c: Canvas) : AnimationTimer() {
 
     var prevTime = System.nanoTime()
     var φ = 0.0
-    var n = 3.0
+    var n = 1.0
     override fun handle(now: Long) {
         with(Params) {
             val dt = (now - prevTime) / animDelay
