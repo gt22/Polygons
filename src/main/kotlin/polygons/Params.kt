@@ -10,11 +10,12 @@ fun Duration.toNanos(): Double {
 
 object Params {
 
-    val animDelay = 10.millis.toNanos()
+    val tFactor = 10.millis.toNanos()
+    val animDelay = tFactor / 10
     const val rotationSpeed = 0.015
     const val growthSpeed = rotationSpeed / τ
     const val colorPeriod = 5 //Seconds
     val colorFactor = factorPerSecond() * colorPeriod
 }
 
-fun factorPerSecond() = with(Params) { rotationSpeed * 1.seconds.toNanos() / animDelay }
+fun factorPerSecond() = with(Params) { rotationSpeed * 1.seconds.toNanos() / tFactor }

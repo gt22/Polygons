@@ -82,32 +82,34 @@ class PolyDrawer(val c: Canvas) : AnimationTimer() {
     var n = 1.0
     override fun handle(now: Long) {
         with(Params) {
-            val dt = (now - prevTime) / animDelay
-            prevTime = now
-            n += growthSpeed * dt
-            φ += rotationSpeed * dt
-            with(c.graphicsContext2D) {
-                save()
-                clear()
+            if (now - prevTime > animDelay) {
+                val dt = (now - prevTime) / tFactor
+                prevTime = now
+                n += growthSpeed * dt
+                φ += rotationSpeed * dt
+                with(c.graphicsContext2D) {
+                    save()
+                    clear()
 
-                val ox = c.width / 2
-                val oy = c.height / 2
-                val r = c.height * 0.5 * 0.75
+                    val ox = c.width / 2
+                    val oy = c.height / 2
+                    val r = c.height * 0.5 * 0.75
 
-                color = c("#99AAB5")
-                fillText("n = ${n.round(3)}", ox, oy - (r * 1.1))
+                    color = c("#99AAB5")
+                    fillText("n = ${n.round(3)}", ox, oy - (r * 1.1))
 
-                translate(ox, oy)
-                sizeScale(r)
-                lineWidth *= 2
+                    translate(ox, oy)
+                    sizeScale(r)
+                    lineWidth *= 2
 
-                strokeCircle(0.0, 0.0, 1.0)
+                    strokeCircle(0.0, 0.0, 1.0)
 
-                color = Color.hsb((φ * 360 / colorFactor) % 360, 1.0, 1.0)
+                    color = Color.hsb((φ * 360 / colorFactor) % 360, 1.0, 1.0)
 
-                drawRegularPolygon(n, φ)
+                    drawRegularPolygon(n, φ)
 
-                restore()
+                    restore()
+                }
             }
         }
     }
