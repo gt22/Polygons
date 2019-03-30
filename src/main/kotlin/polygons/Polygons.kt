@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
+import javafx.scene.text.TextAlignment
 import polygons.Styles.Companion.primaryCanvas
 import tornadofx.*
 import kotlin.math.*
@@ -67,6 +68,13 @@ val Double.degrees
 val Int.degrees
     get() = toDouble().degrees
 
+
+fun Double.round(precision: Int): Double {
+    val t = Math.pow(10.0, precision.toDouble())
+    return Math.round(this * t).toDouble() / t
+}
+
+
 class PolyDrawer(val c: Canvas) : AnimationTimer() {
 
     var prevTime = System.nanoTime()
@@ -85,9 +93,15 @@ class PolyDrawer(val c: Canvas) : AnimationTimer() {
                 val ox = c.width / 2
                 val oy = c.height / 2
                 val r = c.height * 0.5 * 0.75
+
+                color = c("#99AAB5")
+                fillText("n = ${n.round(3)}", ox, oy - (r * 1.1))
+
                 translate(ox, oy)
                 sizeScale(r)
                 lineWidth *= 2
+
+                strokeCircle(0.0, 0.0, 1.0)
 
                 color = Color.hsb((φ * 360 / colorFactor) % 360, 1.0, 1.0)
 
@@ -98,6 +112,9 @@ class PolyDrawer(val c: Canvas) : AnimationTimer() {
         }
     }
 
+    init {
+        c.graphicsContext2D.textAlign = TextAlignment.CENTER
+    }
 
 }
 
